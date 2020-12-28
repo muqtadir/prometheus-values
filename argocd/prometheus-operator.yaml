@@ -13,7 +13,7 @@ spec:
   project: monitoring
   source:
     path: prometheus-operator
-    repoURL: sgit@github.com:muqtadir/prometheus-values.git
+    repoURL: git@github.com:muqtadir/prometheus-values.git
     targetRevision: HEAD
   syncPolicy:
     automated: {}
