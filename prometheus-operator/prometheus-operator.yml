@@ -16,7 +16,7 @@ spec:
         - name: prometheus.prometheusSpec.resources.requests.cpu
           value: '300m'
         - name: prometheus.prometheusSpec.resources.requests.memory
-          value: '500Mi'
+          value: '1Gb'
         - name: prometheus.prometheusSpec.resources.limits.cpu
           value: '300m'
         - name: prometheus.prometheusSpec.resources.limits.memory
