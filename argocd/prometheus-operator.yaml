@@ -12,7 +12,7 @@ spec:
     server: https://kubernetes.default.svc
   project: monitoring
   source:
-    path: monitoring/prometheus-operator
+    path: prometheus-operator
     repoURL: sgit@github.com:muqtadir/prometheus-values.git
     targetRevision: HEAD
   syncPolicy:
