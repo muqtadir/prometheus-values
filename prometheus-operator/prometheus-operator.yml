@@ -12,14 +12,14 @@ spec:
         - name: "app"
           value: $ARGOCD_APP_NAME
         - name: prometheus.prometheusSpec.replicas
-          value: '2'
+          value: '1'
         - name: prometheus.prometheusSpec.resources.requests.cpu
-          value: '1000m'
+          value: '300m'
         - name: prometheus.prometheusSpec.resources.requests.memory
-          value: '2Gi'
+          value: '500Mi'
         - name: prometheus.prometheusSpec.resources.limits.cpu
-          value: '1000m'
+          value: '300m'
         - name: prometheus.prometheusSpec.resources.limits.memory
-          value: '4Gi'
+          value: '500Mi'
         - name: prometheus.prometheusSpec.replicas
           value: '2'
