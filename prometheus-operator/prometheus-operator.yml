@@ -20,4 +20,4 @@ spec:
         - name: prometheus.prometheusSpec.resources.limits.cpu
           value: '300m'
         - name: prometheus.prometheusSpec.resources.limits.memory
-          value: '1Gi
+          value: '1Gi'
