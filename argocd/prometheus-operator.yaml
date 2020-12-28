@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+  labels:
+    scope: system
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: monitoring
+  source:
+    path: monitoring/prometheus-operator
+    repoURL: sgit@github.com:muqtadir/prometheus-values.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated: {}
