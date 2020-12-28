@@ -1,0 +1,3 @@
+[submodule "prometheus-base"]
+	path = prometheus-base
+	url = git@github.com:muqtadir/prometheus-base.git
