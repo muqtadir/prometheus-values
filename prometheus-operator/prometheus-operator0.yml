@@ -80,10 +80,10 @@ spec:
             resources:
              requests:
                memory: 1Gi
-               cpu: 1000m
+               cpu: 200m
              limits:
                memory: 2Gi
-               cpu: 1000m
+               cpu: 200m
 
             # Additional volumes on the output StatefulSet definition.
             volumes: {}
