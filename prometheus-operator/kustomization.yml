@@ -1,4 +1,4 @@
 resources:
 - ../prometheus-base/prometheus-operator
 patchesStrategicMerge:
-- ./prometheus-operator.yml
+- ./prometheus-operator0.yml

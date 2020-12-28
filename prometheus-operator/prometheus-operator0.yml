@@ -1,0 +1,177 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-operator
+  namespace: argocd
+  labels:
+    scope: system
+spec:
+  source:
+    helm:
+      values: |
+        # Default values for kube-prometheus-stack.
+        # This is a YAML-formatted file.
+        # Declare variables to be passed into your templates.
+
+        ## Provide a name in place of kube-prometheus-stack for `app:` labels
+        ##
+        nameOverride: "prometheus-operator"
+        ## Provide a name to substitute for the full names of resources
+        ##
+        fullnameOverride: "prometheus-operator"
+        ## Labels to apply to all resources
+        ##
+        commonLabels:
+          env: le
+          region: eus1
+          cluster: platform
+        alertmanager:
+
+          ## Deploy alertmanager
+          ##
+          enabled: false
+        ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+        ##
+        grafana:
+          enabled: false
+        ## Manages Prometheus and Alertmanager components
+        ##
+        prometheusOperator:
+          enabled: true
+        ## Deploy a Prometheus instance
+        ##
+        prometheus:
+          enabled: true
+          ## Settings affecting prometheusSpec
+          ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
+          ##
+          prometheusSpec:
+            ## If true, pass --storage.tsdb.max-block-duration=2h to prometheus. This is already done if using Thanos
+            ##
+            disableCompaction: true
+            ## EnableAdminAPI enables Prometheus the administrative HTTP API which includes functionality such as deleting time series.
+            ## This is disabled by default.
+            ## ref: https://prometheus.io/docs/prometheus/latest/querying/api/#tsdb-admin-apis
+            ##
+            enableAdminAPI: true
+
+            ## How long to retain metrics
+            ##
+            retention: 7d
+
+            ## Maximum size of metrics
+            ##
+            retentionSize: "10GiB"
+            ## External labels to add to any time series or alerts when communicating with external systems
+            ##
+            externalLabels:
+              region: eus1
+              prometheus_group: mcp
+              cluster: platform
+            ## Standard object’s metadata. More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#metadata
+            ## Metadata Labels and Annotations gets propagated to the prometheus pods.
+            ##
+            podMetadata:
+              labels:
+                aadpodidbinding: sep-eus1-lower-mcp-secret-provider
+
+            ## Resource limits & requests
+            ##
+            resources:
+             requests:
+               memory: 1Gi
+               cpu: 1000m
+             limits:
+               memory: 2Gi
+               cpu: 1000m
+
+            # Additional volumes on the output StatefulSet definition.
+            volumes: {}
+            #- mountPath: "/mnt/secrets-store"
+            #  name: secrets-store-inline
+            #  readOnly: true
+            # Additional VolumeMounts on the output StatefulSet definition.
+            volumeMounts: {}
+            #- name: secrets-store-inline
+            #  csi:
+            #    driver: secrets-store.csi.k8s.io
+            #    readOnly: true
+            #    volumeAttributes:
+            #      secretProviderClass: sep-eus1-lower-mcp-loki-secret-provider
+
+            ## Containers allows injecting additional containers. This is meant to allow adding an authentication proxy to a Prometheus pod.
+            ##  if using proxy extraContainer  update targetPort with proxy container port
+            containers:
+            - args:
+              - sidecar
+              - --prometheus.url=http://127.0.0.1:9090/
+              - --tsdb.path=/prometheus
+              - --grpc-address=[$(POD_IP)]:10901
+              - --http-address=[$(POD_IP)]:10902
+              - |
+                --objstore.config=type: AZURE
+                config:
+                  storage_account: $(STORAGE_ACCOUNT)
+                  storage_account_key: $(THANOS_STORAGE_ACCOUNT_KEY)
+                  container: $(STORAGE_CONTAINER)
+                  endpoint: $(AZURE_ENDPOINT)
+                  max_retries: $(MAX_RETRIES)
+              - --log.level=info
+              - --log.format=logfmt
+              env:
+              - name: POD_IP
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: status.podIP
+              - name: STORAGE_ACCOUNT
+                valueFrom:
+                  secretKeyRef:
+                    key: storage_account
+                    name: thanos-objectstorage-aks
+              - name: THANOS_STORAGE_ACCOUNT_KEY
+                valueFrom:
+                  secretKeyRef:
+                    key: storage_account_key
+                    name: thanos-objectstorage-aks
+              - name: STORAGE_CONTAINER
+                valueFrom:
+                  secretKeyRef:
+                    key: container
+                    name: thanos-objectstorage-aks
+              - name: AZURE_ENDPOINT
+                valueFrom:
+                  secretKeyRef:
+                    key: endpoint
+                    name: thanos-objectstorage-aks
+              - name: MAX_RETRIES
+                valueFrom:
+                  secretKeyRef:
+                    key: max_retries
+                    name: thanos-objectstorage-aks
+              image: quay.io/thanos/thanos:v0.17.2
+              imagePullPolicy: IfNotPresent
+              name: thanos-sidecar
+              ports:
+              - containerPort: 10902
+                name: http
+                protocol: TCP
+              - containerPort: 10901
+                name: grpc
+                protocol: TCP
+              resources:
+                limits:
+                  cpu: 100m
+                  memory: 100Mi
+                requests:
+                  cpu: 50m
+                  memory: 100Mi
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+              - mountPath: /prometheus
+                name: prometheus-prometheus-operator-prometheus-db
+                subPath: prometheus-db
+              #- mountPath: /mnt/secrets-store
+              #  name: secrets-store-inline
+              #  readOnly: true

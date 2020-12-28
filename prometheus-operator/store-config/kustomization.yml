@@ -1,0 +1,12 @@
+secretGenerator:
+- name: thanos-objectstorage-aks
+  literals:
+  - storage_account=promthanos
+  - storage_account_key=lgoKFHxSRSJvc5B8mP50YW4RSRJyz2qKZLpJ3f0WwIC8+HDU3boGPf6qb59DaEue+D0dm6Tk0LdUbBpzz71HOA==
+  - container=thanos-devqa
+  - endpoint=blob.core.windows.net
+  - max_retries=3
+  type: Opaque
+  behavior: create
+generatorOptions:
+  disableNameSuffixHash: true
