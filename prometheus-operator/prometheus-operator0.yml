@@ -18,7 +18,7 @@ spec:
         nameOverride: "prometheus-cluster"
         ## Provide a name to substitute for the full names of resources
         ##
-        fullnameOverride: "prometheus-operator"
+        fullnameOverride: "prometheus-cluster"
         ## Labels to apply to all resources
         ##
         commonLabels:
