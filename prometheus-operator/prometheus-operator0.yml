@@ -15,7 +15,7 @@ spec:
 
         ## Provide a name in place of kube-prometheus-stack for `app:` labels
         ##
-        nameOverride: "prometheus-operator"
+        nameOverride: "prometheus-cluster"
         ## Provide a name to substitute for the full names of resources
         ##
         fullnameOverride: "prometheus-operator"
