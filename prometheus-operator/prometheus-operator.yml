@@ -131,8 +131,7 @@ spec:
                 spec:
                   selector:
                     matchLabels:
-                      app: prometheus                
-                  storageClassName: default
+                      app: prometheus
                   accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
