@@ -9,6 +9,10 @@ spec:
   source:
     helm:
       parameters:
+        - name: nameOverride
+          value: "prometheus-operator"
+        - name: fullnameOverride
+          value: "prometheus-operator"        
         - name: prometheus.prometheusSpec.externalUrl
           value: "http://prometheus.eus1-perf.internalsephora.com"
         - name: commonLabels.cluster
