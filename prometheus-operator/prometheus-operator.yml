@@ -127,10 +127,10 @@ spec:
                   name: prometheus-storage
                 spec:
                   storageClassName: default
-                    accessModes: ["ReadWriteOnce"]
-                    resources:
-                      requests:
-                        storage: 50Gi
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 50Gi
                 selector: {}
             # Additional volumes on the output StatefulSet definition.
             volumes: {}
