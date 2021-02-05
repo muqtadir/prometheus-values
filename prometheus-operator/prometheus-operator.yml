@@ -126,13 +126,13 @@ spec:
                cpu: 1000m
             storageSpec:
               volumeClaimTemplate:
-                metadata:
-                  name: prometheus-storage
                 spec:
                   selector:
                     matchLabels:
                       app: prometheus
-                  accessModes: ["ReadWriteOnce"]
+                  accessModes: 
+                  - "ReadWriteOnce"
+                  storageClassName: default
                   resources:
                     requests:
                       storage: 10Gi                 
