@@ -98,7 +98,7 @@ spec:
             ##
             externalLabels:
               region: eus1
-              prometheus_group: mcp
+              prometheus_group: eus1
             ##  cluster: platform
             ## Number of Prometheus replicas desired
             ##
