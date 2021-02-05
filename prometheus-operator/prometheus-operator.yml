@@ -9,15 +9,129 @@ spec:
   source:
     helm:
       parameters:
-        - name: "app"
-          value: $ARGOCD_APP_NAME
-        - name: prometheus.prometheusSpec.replicas
-          value: '1'
-        - name: prometheus.prometheusSpec.resources.requests.cpu
-          value: '300m'
-        - name: prometheus.prometheusSpec.resources.requests.memory
-          value: '500Mi'
-        - name: prometheus.prometheusSpec.resources.limits.cpu
-          value: '300m'
-        - name: prometheus.prometheusSpec.resources.limits.memory
-          value: 1Gi
+        - name: prometheus.prometheusSpec.externalUrl
+          value: "http://prometheus.eus1-perf.internalsephora.com"
+        - name: commonLabels.cluster
+          value: "common"
+        - name: prometheus.prometheusSpec.externalLabels.cluster
+          value: "common"
+      values: |
+        # Default values for kube-prometheus-stack.
+        # This is a YAML-formatted file.
+        # Declare variables to be passed into your templates.
+
+        ## Provide a name in place of kube-prometheus-stack for `app:` labels
+        ##
+        ## nameOverride: "$(CLUSTER)"
+        ## Provide a name to substitute for the full names of resources
+        ##
+        ## fullnameOverride: "$(CLUSTER)"
+        ## Labels to apply to all resources
+        ##
+        commonLabels:
+          region: eus1
+          cluster: common
+        ## Create default rules for monitoring the cluster
+        ##
+        defaultRules:
+          create: true
+          rules:
+            etcd: false
+
+        alertmanager:
+          ## Deploy alertmanager
+          ##
+          enabled: false
+        ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+        ##
+        grafana:
+          enabled: false
+        ## Manages Prometheus and Alertmanager components
+        ##
+        prometheusOperator:
+          enabled: true
+        ## Deploy a Prometheus instance
+        ##
+        prometheus:
+          enabled: true
+          ## Settings affecting prometheusSpec
+          ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
+          ##
+          prometheusSpec:
+            ## If true, pass --storage.tsdb.max-block-duration=2h to prometheus. This is already done if using Thanos
+            ##
+            # disableCompaction: true
+            ## EnableAdminAPI enables Prometheus the administrative HTTP API which includes functionality such as deleting time series.
+            ## This is disabled by default.
+            ## ref: https://prometheus.io/docs/prometheus/latest/querying/api/#tsdb-admin-apis
+            ##
+            enableAdminAPI: true
+
+            ## How long to retain metrics
+            ##
+            retention: 6h
+
+            ## Maximum size of metrics
+            ##
+            retentionSize: "10GiB"
+
+            ## Alertmanagers to which alerts will be sent
+            ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#alertmanagerendpoints
+            ##
+            ## Default configuration will connect to the alertmanager deployed as part of this release
+            ##
+            alertingEndpoints:
+            - name: "alertmanager-perf"
+              namespace: "monitoring"
+              port: web
+            #   scheme: http
+            #   pathPrefix: ""
+            #   tlsConfig: {}
+            #   bearerTokenFile: ""
+            #   apiVersion: v2
+
+            ## External labels to add to any time series or alerts when communicating with external systems
+            ##
+            externalLabels:
+              region: eus1
+              prometheus_group: mcp
+            ##  cluster: platform
+            ## Number of Prometheus replicas desired
+            ##
+            replicas: 2
+
+            ## External URL at which Prometheus will be reachable.
+            ## via parameter
+            ## externalUrl: "http://prometheus.eus1-platform-le.internalsephora.com"
+            ## Standard object’s metadata. More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#metadata
+            ## Metadata Labels and Annotations gets propagated to the prometheus pods.
+            ##
+
+
+            ## Resource limits & requests
+            ##
+            resources:
+             requests:
+               memory: 1Gi
+               cpu: 1000m
+             limits:
+               memory: 2Gi
+               cpu: 1000m
+
+            # Additional volumes on the output StatefulSet definition.
+            volumes: {}
+
+            # Additional VolumeMounts on the output StatefulSet definition.
+            volumeMounts: {}
+            thanos:
+              image: quay.io/thanos/thanos:v0.17.2
+              resources:
+               requests:
+                 memory: 100Mi
+                 cpu: 100m
+               limits:
+                 memory: 200Mi
+                 cpu: 100m
+              objectStorageConfig:
+                key: thanos.yaml
+                name: thanos-objectstorage
