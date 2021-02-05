@@ -126,8 +126,6 @@ spec:
                cpu: 1000m
             storageSpec:
               volumeClaimTemplate:
-                metadata:
-                  name: prometheus-storage
                 spec:
                   accessModes: 
                   - ReadWriteOnce
