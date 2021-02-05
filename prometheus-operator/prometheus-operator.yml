@@ -98,7 +98,7 @@ spec:
             ##  cluster: platform
             ## Number of Prometheus replicas desired
             ##
-            replicas: 2
+            replicas: 1
 
             ## External URL at which Prometheus will be reachable.
             ## via parameter
