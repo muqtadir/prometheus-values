@@ -130,7 +130,7 @@ spec:
                   accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
-                      storage: 50Gi
+                      storage: 10Gi
                   selector: {}
             # Additional volumes on the output StatefulSet definition.
             volumes: {}
