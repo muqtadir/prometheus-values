@@ -121,7 +121,17 @@ spec:
              limits:
                memory: 2Gi
                cpu: 1000m
-
+            storageSpec:
+              volumeClaimTemplate:
+                metadata:
+                  name: prometheus-storage
+                spec:
+                  storageClassName: default
+                    accessModes: ["ReadWriteOnce"]
+                    resources:
+                      requests:
+                        storage: 50Gi
+                selector: {}
             # Additional volumes on the output StatefulSet definition.
             volumes: {}
 
