@@ -129,11 +129,9 @@ spec:
                 metadata:
                   name: prometheus-storage
                 spec:
-                  selector:
-                    matchLabels:
-                      app: prometheus
+                  selector: {}
                   accessModes: 
-                  - "ReadWriteOnce"
+                  - ReadWriteOnce
                   storageClassName: default
                   resources:
                     requests:
