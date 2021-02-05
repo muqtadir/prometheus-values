@@ -129,14 +129,14 @@ spec:
                 metadata:
                   name: prometheus-storage
                 spec:
+                  selector:
+                    matchLabels:
+                      app: prometheus                
                   storageClassName: default
                   accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
-                      storage: 10Gi
-                selector:
-                  matchLabels:
-                    app: prometheus                 
+                      storage: 10Gi                 
             # Additional volumes on the output StatefulSet definition.
             volumes: {}
 
