@@ -12,7 +12,7 @@ spec:
         - name: nameOverride
           value: "prometheus-operator"
         - name: fullnameOverride
-          value: "prometheus-operator"        
+          value: "prometheus-operator"
         - name: prometheus.prometheusSpec.externalUrl
           value: "http://prometheus.eus1-perf.internalsephora.com"
         - name: commonLabels.cluster
@@ -102,7 +102,7 @@ spec:
             ##  cluster: platform
             ## Number of Prometheus replicas desired
             ##
-            replicas: 1
+            replicas: 2
 
             ## Resource limits & requests
             ##
@@ -114,6 +114,17 @@ spec:
                memory: 2Gi
                cpu: 1000m
 
+            storageSpec:
+              volumeClaimTemplate:
+                metadata:
+                  name: prometheus-storage
+                spec:
+                  storageClassName: default
+                  accessModes:
+                  - "ReadWriteOnce"
+                  resources:
+                    requests:
+                      storage: 20Gi
             # Additional volumes on the output StatefulSet definition.
             volumes: {}
 
