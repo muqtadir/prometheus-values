@@ -20,10 +20,7 @@ spec:
         - name: prometheus.prometheusSpec.externalLabels.cluster
           value: "common"
       values: |
-        # 
-        
-        
-        values for kube-prometheus-stack.
+        # Default values for kube-prometheus-stack.
         # This is a YAML-formatted file.
         # Declare variables to be passed into your templates.
 
@@ -88,7 +85,7 @@ spec:
             ## Default configuration will connect to the alertmanager deployed as part of this release
             ##
             alertingEndpoints:
-            - name: "alertmanager-perf"
+            - name: "alertmanager-qa"
               namespace: "monitoring"
               port: web
             #   scheme: http
@@ -107,25 +104,16 @@ spec:
             ##
             replicas: 1
 
-            ## External URL at which Prometheus will be reachable.
-            ## via parameter
-            ## externalUrl: "http://prometheus.eus1-platform-le.internalsephora.com"
-            ## Standard object’s metadata. More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#metadata
-            ## Metadata Labels and Annotations gets propagated to the prometheus pods.
-            ##
-
-
             ## Resource limits & requests
             ##
             resources:
              requests:
-               memory: 1Gi
+               memory: 2Gi
                cpu: 1000m
              limits:
                memory: 2Gi
                cpu: 1000m
 
-               
             # Additional volumes on the output StatefulSet definition.
             volumes: {}
 
