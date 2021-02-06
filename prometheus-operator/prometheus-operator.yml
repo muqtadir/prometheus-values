@@ -124,7 +124,10 @@ spec:
              limits:
                memory: 2Gi
                cpu: 1000m
+
             storageSpec:
+            - metadata:
+                name: prometheus-storage
               volumeClaimTemplate:
                 spec:
                   accessModes: 
