@@ -73,7 +73,7 @@ spec:
 
             ## How long to retain metrics
             ##
-            retention: 6h
+            #retention: 6h
 
             ## Maximum size of metrics
             ##
