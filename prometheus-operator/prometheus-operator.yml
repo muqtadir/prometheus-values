@@ -77,7 +77,7 @@ spec:
 
             ## Maximum size of metrics
             ##
-            retentionSize: "10GiB"
+            retentionSize: "10GB"
 
             ## Alertmanagers to which alerts will be sent
             ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#alertmanagerendpoints
