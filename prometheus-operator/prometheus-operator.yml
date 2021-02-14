@@ -45,11 +45,11 @@ spec:
         alertmanager:
           ## Deploy alertmanager
           ##
-          enabled: false
+          enabled: true
         ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
         ##
         grafana:
-          enabled: false
+          enabled: true
         ## Manages Prometheus and Alertmanager components
         ##
         prometheusOperator:
