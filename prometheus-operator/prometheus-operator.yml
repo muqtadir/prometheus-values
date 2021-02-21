@@ -64,8 +64,12 @@ spec:
           ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
           ##
           prometheusSpec:
-            ruleNamespaceSelector: 
-              any: true
+            ruleSelector:
+              matchExpressions:
+              - key: prometheus
+                operator: In
+                values: 
+                - k8s
             ## If true, pass --storage.tsdb.max-block-duration=2h to prometheus. This is already done if using Thanos
             ##
             # disableCompaction: true
