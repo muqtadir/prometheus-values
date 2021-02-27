@@ -1,7 +1,16 @@
-global:
-  resolve_timeout: 5m
-  smtp_from: "AKS Perf Alerts <aks-perf-alertmanager@gmail.com>"
-  smtp_smarthost: gmail:25
-  smtp_require_tls: false
-templates:
-- '/etc/alertmanager/config/seph-email.tmpl'
+# Source: promtail/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager
+  labels:
+    app: alertmanager-test
+data:
+  alertmanager.yaml |
+    global:
+      resolve_timeout: 5m
+      smtp_from: "AKS Perf Alerts <aks-perf-alertmanager@gmail.com>"
+      smtp_smarthost: gmail:25
+      smtp_require_tls: false
+    templates:
+    - '/etc/alertmanager/config/seph-email.tmpl'

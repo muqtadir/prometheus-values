@@ -22,7 +22,14 @@ spec:
     runAsUser: 1000
   #serviceAccountName: alertmanager-account
   version: v0.21.0
-  configSecret: alertmanager-test
+  config:
+    global:
+      resolve_timeout: 5m
+      smtp_from: "AKS Perf Alerts <aks-perf-alertmanager@gmail.com>"
+      smtp_smarthost: gmail:25
+      smtp_require_tls: false
+    templates:
+    - '/etc/alertmanager/config/seph-email.tmpl'
   alertmanagerConfigSelector:
       matchLabels:
         alertmanagerConfig: alertmanager-config
