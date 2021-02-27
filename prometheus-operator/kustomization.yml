@@ -3,3 +3,7 @@ resources:
 - ./plat-alertmanager-config.yml
 patchesStrategicMerge:
 - ./prometheus-operator.yml
+secretGenerator:
+- name: alertmanager-email
+  files:
+  - ./seph-email.tmpl
