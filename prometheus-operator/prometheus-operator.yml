@@ -54,11 +54,11 @@ spec:
               smtp_require_tls: false
             templates:
             - '/etc/alertmanager/config/seph-email.tmpl'
-          alertmanagerSpec:
-            configSecret: alertmanager-alertmanager-test
-        alertmanagerConfigSelector:
-            matchLabels:
-              alertmanagerConfig: alertmanager-config
+        #  alertmanagerSpec:
+        #    configSecret: alertmanager-alertmanager-test
+        #alertmanagerConfigSelector:
+        #    matchLabels:
+        #      alertmanagerConfig: alertmanager-config
         ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
         ##
         grafana:
