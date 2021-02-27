@@ -45,7 +45,7 @@ spec:
         alertmanager:
           ## Deploy alertmanager
           ##
-          enabled: true
+          enabled: false
           alertmanagerSpec:
             configSecret: alertmanager-config
         alertmanagerConfigSelector:

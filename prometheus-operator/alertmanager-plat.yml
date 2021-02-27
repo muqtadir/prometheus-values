@@ -1,0 +1,78 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  labels:
+    app: alertmanager
+  name: $(CLUSTER)
+  namespace: monitoring
+spec:
+  baseImage: quay.io/prometheus/alertmanager
+  externalUrl: https://alertmanager$(WILDCARD_INGRESS_DNS)
+  listenLocal: false
+  logFormat: logfmt
+  logLevel: info
+  paused: false
+  portName: web
+  replicas: 2
+  retention: 120h
+  routePrefix: /
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  #serviceAccountName: alertmanager-account
+  version: v0.21.0
+  alertmanagerConfigSelector:
+      matchLabels:
+        alertmanagerConfig: alertmanager-config
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: default
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: alertmanager
+            operator: In
+            values:
+            - $(CLUSTER)
+        topologyKey: "kubernetes.io/hostname"
+
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: beta.kubernetes.io/arch
+            operator: In
+            values:
+            - amd64
+            - ppc64le
+            - s390x
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 2
+        preference:
+          matchExpressions:
+          - key: beta.kubernetes.io/arch
+            operator: In
+            values:
+            - amd64
+      - weight: 2
+        preference:
+          matchExpressions:
+          - key: beta.kubernetes.io/arch
+            operator: In
+            values:
+            - ppc64le
+      - weight: 2
+        preference:
+          matchExpressions:
+          - key: beta.kubernetes.io/arch
+            operator: In
+            values:
+            - s390x
