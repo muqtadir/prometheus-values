@@ -41,7 +41,7 @@ spec:
           - key: alertmanager
             operator: In
             values:
-            - $(CLUSTER)
+            - alertmanager-test
         topologyKey: "kubernetes.io/hostname"
 
     nodeAffinity:
