@@ -1,0 +1,113 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: plat-alertmanager-config
+  labels:
+    alertmanagerConfig: alertmanager-config
+spec:
+  route:
+    groupBy: ['alertname']
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 1d
+    receiver: 'default'
+    routes:
+  # Match for Monitoring namespace
+    - receiver : 'monitoring-namespace'
+      matchers:
+      - name: namespace
+        value : ^(monitoring)$
+        regex: true
+      - name: prometheus
+        value: ^(monitoring/prometheus-operator-prometheus)$
+        regex: true
+      groupBy: [app, alertname]
+      continue: false
+  # below blackbox-probe-failed-ne is for network team refer to connectivity-probe.yml
+  # if you are changing any thing in this job
+    - receiver : 'blackbox-probe-failed-ne'
+      matchers:
+      - name: alertname
+        value: ^(ProbeFailed|DNSLatencyIncreased)$
+        regex: true
+      group_by: [cluster, alertname]
+      continue: false
+
+
+    # routes:
+    # - receiver: 'pagerduty'
+    #   group_wait: 10s
+    #   match:
+    #     severity: critical
+    # - receiver: 'dev'
+    #   group_wait: 10s
+    #   match:
+    #     severity: warning
+  receivers:
+  - name: 'default'
+    emailConfigs:
+    - to: 'mcp_engineering@gmail.com'
+      from:  "AKS Platform-DEVQA Alerts<aks-qa-alertmanager@gmail.com>"
+      smarthost: "gmail.com:25"
+      sendResolved: true
+      headers:
+      - key: Subject
+        value: '{{ template "email.default.subject" . }}| default'
+  - name : 'monitoring-namespace'
+    emailConfigs:
+    - to: 'mcp_engineering@gmail.com'
+      from:  "AKS Platform-DEVQA Alerts<aks-qa-alertmanager@gmail.com>"
+      smarthost: "gmail.com:25"
+      sendResolved: true
+      headers:
+      - key: Subject
+        value: '{{ template "email.default.subject" . }}| monitoring'
+  - name : 'blackbox-probe-failed-ne'
+    emailConfigs:
+    - to: 'tom.tu@gmail.com, network-engineering@gmail.com, mcp_engineering@gmail.com, NOC-Network@gmail.com'
+      from:  "AKS Platform-DEVQA Alerts<aks-qa-alertmanager@gmail.com>"
+      smarthost: "gmail.com:25"
+      sendResolved: true
+      headers:
+      - key: Subject
+        value: '{{ template "email.default.subject" . }}| Cross Cluster Probe Failed'
+  inhibitRules:
+  # Inhibition rules allow to mute a set of alerts given that another alert is
+  # firing.
+  # We use this to mute any warning-level notifications if the same alert is
+  # already critical.
+  - sourceMatch:
+    - name: severity
+      value: 'critical'
+    targetMatch:
+    - name: severity
+      value: 'warning'
+  # Apply inhibition if the alertname is the same.
+  # CAUTION:
+  #   If all label names listed in `equal` are missing
+  #   from both the source and target alerts,
+  #   the inhibition rule will apply!
+    equal: ['alertname']
+  - targetMatch:
+    - name: alertname
+      value: 'KubeHpaMaxedOut'
+    equal: ['prometheus']
+  - targetMatch:
+    - name: alertname
+      value: 'Watchdog'
+    equal: ['prometheus']
+  - targetMatch:
+    - name: alertname
+      value: 'KubeSchedulerDown'
+    equal: ['prometheus']
+  - targetMatch:
+    - name: alertname
+      value: 'KubeControllerManagerDown'
+    equal: ['prometheus']
+  - targetMatch:
+    - name: alertname
+      value: 'KubeJobCompletion'
+  - targetMatch:
+    - name: alertname
+      value: 'CPUThrottlingHigh'
+    equal: ['prometheus']
