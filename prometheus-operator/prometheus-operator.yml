@@ -46,11 +46,11 @@ spec:
           ## Deploy alertmanager
           ##
           enabled: false
-          alertmanagerSpec:
-            configSecret: alertmanager-config
-        alertmanagerConfigSelector:
-            matchLabels:
-              alertmanagerConfig: alertmanager-config
+          #alertmanagerSpec:
+          #  configSecret: alertmanager-config
+        #alertmanagerConfigSelector:
+        #    matchLabels:
+        #      alertmanagerConfig: alertmanager-config
         ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
         ##
         grafana:
