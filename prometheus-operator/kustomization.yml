@@ -1,4 +1,5 @@
 resources:
 - ../prometheus-base/prometheus-operator
+- ./plat-alertmanager-config.yml
 patchesStrategicMerge:
 - ./prometheus-operator.yml
