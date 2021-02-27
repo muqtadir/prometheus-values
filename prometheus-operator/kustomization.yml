@@ -8,3 +8,4 @@ secretGenerator:
 - name: alertmanager-test
   files:
   - ./seph-email.tmpl
+  - ./alertmanager.yaml
