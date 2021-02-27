@@ -1,0 +1,5 @@
+global:
+  resolve_timeout: 5m
+  smtp_from: "AKS Perf Alerts <aks-perf-alertmanager@gmail.com>"
+  smtp_smarthost: gmail:25
+  smtp_require_tls: false

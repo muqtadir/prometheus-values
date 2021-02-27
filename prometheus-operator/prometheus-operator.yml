@@ -46,8 +46,8 @@ spec:
           ## Deploy alertmanager
           ##
           enabled: true
-          #alertmanagerSpec:
-          #  configSecret: alertmanager-email
+          alertmanagerSpec:
+            configSecret: alertmanager-config
         alertmanagerConfigSelector:
             matchLabels:
               alertmanagerConfig: alertmanager-config
