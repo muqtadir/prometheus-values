@@ -115,16 +115,16 @@ spec:
             ##  cluster: platform
             ## Number of Prometheus replicas desired
             ##
-            replicas: 2
+            replicas: 1
 
             ## Resource limits & requests
             ##
             resources:
              requests:
-               memory: 2Gi
+               memory: 1Gi
                cpu: 1000m
              limits:
-               memory: 2Gi
+               memory: 500Mi
                cpu: 1000m
 
             storageSpec:
