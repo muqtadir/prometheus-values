@@ -46,6 +46,9 @@ spec:
           ## Deploy alertmanager
           ##
           enabled: true
+        alertmanagerConfigSelector:
+            matchLabels:
+              alertmanagerConfig: alertmanager-config
         ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
         ##
         grafana:
@@ -68,7 +71,7 @@ spec:
               matchExpressions:
               - key: prometheus
                 operator: In
-                values: 
+                values:
                 - k8s
             ## If true, pass --storage.tsdb.max-block-duration=2h to prometheus. This is already done if using Thanos
             ##
