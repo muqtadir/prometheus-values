@@ -45,7 +45,7 @@ spec:
         alertmanager:
           ## Deploy alertmanager
           ##
-          enabled: false
+          enabled: true
           config:
             global:
               resolve_timeout: 5m
