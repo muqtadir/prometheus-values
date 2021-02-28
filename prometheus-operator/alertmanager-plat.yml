@@ -23,3 +23,6 @@ spec:
   #serviceAccountName: alertmanager-account
   version: v0.21.0
   configSecret: alertmanager-alertmanager-test
+  alertmanagerConfigSelector:
+      matchLabels:
+        alertmanagerConfig: alertmanager-config
