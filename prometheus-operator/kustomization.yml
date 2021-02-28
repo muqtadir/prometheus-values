@@ -1,11 +1,11 @@
 resources:
 - ../prometheus-base/prometheus-operator
 - ./plat-alertmanager-config.yml
-- ./alertmanager-plat.yml
+#- ./alertmanager-plat.yml
 patchesStrategicMerge:
 - ./prometheus-operator.yml
 secretGenerator:
-- name: alertmanager-alertmanager-test
+- name: alertmanager-prometheus-operator-alertmanager-config
   files:
   - ./seph-email.tmpl
   - ./alertmanager.yaml
