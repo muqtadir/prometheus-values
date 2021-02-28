@@ -22,3 +22,4 @@ spec:
     runAsUser: 1000
   #serviceAccountName: alertmanager-account
   version: v0.21.0
+  configSecret: alertmanager-alertmanager-test
