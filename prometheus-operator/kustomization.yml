@@ -2,7 +2,7 @@ resources:
 - ../prometheus-base/prometheus-operator
 - ./alertmanager-rbac.yml
 - ./plat-alertmanager-config.yml
-#- ./alertmanager-plat.yml
+- ./alertmanager-plat.yml
 patchesStrategicMerge:
 - ./prometheus-operator.yml
 secretGenerator:
