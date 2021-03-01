@@ -9,6 +9,6 @@ route:
   group_interval: 5m
   repeat_interval: 1d
   receiver: 'default'
-  
+  routes: {}
 templates:
 - '/etc/alertmanager/config/seph-email.tmpl'
