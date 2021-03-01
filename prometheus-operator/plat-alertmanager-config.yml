@@ -51,8 +51,8 @@ spec:
       smarthost: "gmail.com:25"
       sendResolved: true
       headers:
-      - key: Subjects
-        value: '{{ template "email.default.Subjects" . }}| default'
+      - key: subject
+        value: '{{ template "email.default.subject" . }}| default'
   - name : 'monitoring-namespace'
     emailConfigs:
     - to: 'mcp_engineering@gmail.com'
@@ -60,8 +60,8 @@ spec:
       smarthost: "gmail.com:25"
       sendResolved: true
       headers:
-      - key: Subjects
-        value: '{{ template "email.default.Subjects" . }}| monitoring'
+      - key: subject
+        value: '{{ template "email.default.subject" . }}| monitoring'
   - name : 'blackbox-probe-failed-ne'
     emailConfigs:
     - to: 'tom.tu@gmail.com, network-engineering@gmail.com, mcp_engineering@gmail.com, NOC-Network@gmail.com'
@@ -69,8 +69,8 @@ spec:
       smarthost: "gmail.com:25"
       sendResolved: true
       headers:
-      - key: Subjects
-        value: '{{ template "email.default.Subjects" . }}| Cross Cluster Probe Failed'
+      - key: subject
+        value: '{{ template "email.default.subject" . }}| Cross Cluster Probe Failed'
   inhibitRules:
   # Inhibition rules allow to mute a set of alerts given that another alert is
   # firing.
