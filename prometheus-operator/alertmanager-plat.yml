@@ -3,7 +3,7 @@ kind: Alertmanager
 metadata:
   labels:
     app: alertmanager
-  name: alertmanager-test
+  name: example
   namespace: monitoring
 spec:
   baseImage: quay.io/prometheus/alertmanager
