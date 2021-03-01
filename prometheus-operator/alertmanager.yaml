@@ -4,8 +4,17 @@ global:
   smtp_smarthost: azre1-smtp-lower.sephoraus.com:25
   smtp_require_tls: false
 route:
-  receiver: "null"
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1d
+  receiver: 'default'
 receivers:
-- name: "null"
+- name: 'default'
+  email_configs:
+  - to: 'mcp_engineering@sephora.com'
+    send_resolved: true
+    headers:
+       Subject: '{{ template "email.default.subject" . }}| default'
 templates:
 - '/etc/alertmanager/config/seph-email.tmpl'
