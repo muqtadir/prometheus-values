@@ -9,6 +9,6 @@ secretGenerator:
 - name: alertmanager-example
   files:
   - ./seph-email.tmpl
-  #- ./alertmanager.yaml
+  - ./alertmanager.yaml
 generatorOptions:
   disableNameSuffixHash: true
