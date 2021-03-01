@@ -68,9 +68,6 @@ spec:
       from:  "AKS Platform-DEVQA Alerts<aks-qa-alertmanager@gmail.com>"
       smarthost: "gmail.com:25"
       sendResolved: true
-      headers:
-      - key: subject
-        value: '| Cross Cluster Probe Failed'
   inhibitRules:
   # Inhibition rules allow to mute a set of alerts given that another alert is
   # firing.
