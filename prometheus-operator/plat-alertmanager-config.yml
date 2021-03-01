@@ -3,7 +3,7 @@ kind: AlertmanagerConfig
 metadata:
   name: plat-alertmanager-config
   labels:
-    alertmanagerConfig: alertmanager-configs
+    alertmanagerConfig: alertmanager-config
 spec:
   route:
     groupBy: ['alertname']
