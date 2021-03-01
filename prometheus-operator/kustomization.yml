@@ -1,14 +1,14 @@
 resources:
 - ../prometheus-base/prometheus-operator
-- ./alertmanager-rbac.yml
+#- ./alertmanager-rbac.yml
 - ./plat-alertmanager-config.yml
 - ./alertmanager-plat.yml
 patchesStrategicMerge:
 - ./prometheus-operator.yml
 secretGenerator:
-- name: alertmanager-examples
+- name: alertmanager-example
   files:
   - ./seph-email.tmpl
-  - ./alertmanager.yaml
+  #- ./alertmanager.yaml
 generatorOptions:
   disableNameSuffixHash: true

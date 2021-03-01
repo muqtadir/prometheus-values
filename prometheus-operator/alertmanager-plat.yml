@@ -20,7 +20,7 @@ spec:
     fsGroup: 2000
     runAsNonRoot: true
     runAsUser: 1000
-  serviceAccountName: alertmanager-account
+  #serviceAccountName: alertmanager-account
   version: v0.21.0
   alertmanagerConfigSelector:
       matchLabels:
