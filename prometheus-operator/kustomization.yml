@@ -10,3 +10,5 @@ secretGenerator:
   files:
   - ./seph-email.tmpl
   - ./alertmanager.yaml
+generatorOptions:
+  disableNameSuffixHash: true
