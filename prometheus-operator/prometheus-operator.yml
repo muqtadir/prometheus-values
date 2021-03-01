@@ -115,7 +115,7 @@ spec:
             ## Default configuration will connect to the alertmanager deployed as part of this release
             ##
             alertingEndpoints:
-            - name: "alertmanager-qa"
+            - name: "alertmanager-operated"
               namespace: "monitoring"
               port: web
             #   scheme: http
