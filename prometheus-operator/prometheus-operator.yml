@@ -56,7 +56,7 @@ spec:
           #  - '/etc/alertmanager/config/seph-email.tmpl'
           alertmanagerSpec:
             useExistingSecret: true
-            configSecret: alertmanager-examples
+            configSecret: alertmanager-example
             alertmanagerConfigSelector:
                 matchLabels:
                   alertmanagerConfig: alertmanager-config

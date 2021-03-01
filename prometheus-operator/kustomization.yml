@@ -6,7 +6,7 @@ resources:
 patchesStrategicMerge:
 - ./prometheus-operator.yml
 secretGenerator:
-- name: alertmanager-examples
+- name: alertmanager-example
   files:
   - ./seph-email.tmpl
   - ./alertmanager.yaml
