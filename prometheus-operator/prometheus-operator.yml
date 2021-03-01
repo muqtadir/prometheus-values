@@ -54,20 +54,7 @@ spec:
           #    smtp_require_tls: false
           #  templates:
           #  - '/etc/alertmanager/config/seph-email.tmpl'
-          alertmanagerSpec:
-            useExistingSecret: true
-            configSecret: alertmanager-alertmanager-test
-            alertmanagerConfigSelector:
-                matchLabels:
-                  alertmanagerConfig: alertmanager-config
-          storage:
-            volumeClaimTemplate:
-              spec:
-                storageClassName: default
-                accessModes: ["ReadWriteOnce"]
-                resources:
-                  requests:
-                    storage: 10Gi
+
         ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
         ##
         grafana:
