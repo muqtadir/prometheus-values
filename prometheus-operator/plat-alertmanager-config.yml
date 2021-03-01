@@ -70,7 +70,7 @@ spec:
       sendResolved: true
       headers:
       - key: subject
-        value: '{{ template "email.default.subject" . }}| Cross Cluster Probe Failed'
+        value: '| Cross Cluster Probe Failed'
   inhibitRules:
   # Inhibition rules allow to mute a set of alerts given that another alert is
   # firing.
