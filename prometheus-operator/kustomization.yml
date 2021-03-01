@@ -1,6 +1,6 @@
 resources:
 - ../prometheus-base/prometheus-operator
-#- ./alertmanager-rbac.yml
+- ./alertmanager-rbac.yml
 - ./plat-alertmanager-config.yml
 - ./alertmanager-plat.yml
 patchesStrategicMerge:
