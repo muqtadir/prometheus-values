@@ -65,8 +65,6 @@ spec:
   - name : 'blackbox-probe-failed-ne'
     emailConfigs:
     - to: 'tom.tu@gmail.com, network-engineering@gmail.com, mcp_engineering@gmail.com, NOC-Network@gmail.com'
-      from:  "AKS Platform-DEVQA Alerts<aks-qa-alertmanager@gmail.com>"
-      smarthost: "gmail.com:25"
       sendResolved: true
   inhibitRules:
   # Inhibition rules allow to mute a set of alerts given that another alert is
