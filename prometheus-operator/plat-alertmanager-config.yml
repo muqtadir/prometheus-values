@@ -61,7 +61,7 @@ spec:
       sendResolved: true
       headers:
       - key: "Subject"
-        value: "{{ template "email.default.subject" . }}| monitoring"
+        value: '{{ template "email.default.subject" . }}| monitoring'
   - name : 'blackbox-probe-failed-ne'
     emailConfigs:
     - to: 'tom.tu@gmail.com, network-engineering@gmail.com, mcp_engineering@gmail.com, NOC-Network@gmail.com'
