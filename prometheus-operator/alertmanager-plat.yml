@@ -23,8 +23,8 @@ spec:
   #serviceAccountName: alertmanager-account
   version: v0.21.0
   alertmanagerConfigNamespaceSelector:
-    matchNames:
-      - monitoring
+    matchLabels:
+      alertmanagerConfig: alertmanager-config
   alertmanagerConfigSelector:
       matchLabels:
         alertmanagerConfig: alertmanager-config
